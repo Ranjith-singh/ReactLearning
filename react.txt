@@ -1,0 +1,49 @@
+Reactjs in basically a frontend framework that makes your project organized
+React has 2 variants
+    reactNative: for mobile based applications
+    reactWeb: for web based applications
+React individually doesn't perform very well
+    but combined with other framework/libraries like "react-router-dom" and "redux" it makes more sense
+you can create react app in 2 ways
+    using react-create-app: uses all the react frameworks/libraries to create react app
+        lots of unnecessary libs like monitoring stats, testing frameworks etc makes it slower
+    using create vite@latest: imports only necessary frameworks which makes it faster
+index.html acts as the main/starting page of application
+all the functions are called in main.jsx in similar fashion to html ele tags
+func should be written in a .jsx file as restricted by vite
+the main part of using the .jsx is we can write html in a javascript file
+
+Building a custom react app:
+    react at the end of the day converts yours jsx functions into reactElement using the render function of react
+    we can select the domElement to operate on which is the root element of the index.html
+    we specify our own custom react element object with our own attributes
+    we make our own customRender method that takes the reactElement to be appended to the root element
+    react internally does the same thing for the func that returns jsx but it uses reacts own render method
+        that allows its reactElement attributes of its own type not our custom one
+        the jsx tag passed to the react.render internally executes the func which can be directly executed
+        react doesn't allow you to create you own element you can create new element using the react.createElement()
+
+projects:
+    02counter:
+        create a counter value that gets increamented and decremented using buttons
+        in Javascript we should update the value and place them individually in the dom variable references
+        in React we use hooks like useState() and useEffect() to reflect the updatedVariable in the entire dom
+    React createRoot():
+        React uses the createRoot method to create a virtual dom in memory from the browser dom
+        when the dom content is modified it creates a new dom and compares it with the virtual dom using diffing.
+        the changes are propagated to virtual dom using the react fiber algo which uses some techniques for reconciliation:
+            assign task priority, abort tasks and wait before update etc.
+    03tailwindprops:
+        tailwind is a utility function that internally uses the css for ui/ux
+        you can create a component for a tailwind and pass the props obj for attribute insertion in tailwind component
+        the component directly provides this props obj
+    
+
+    
+    
+
+
+
+
+
+
