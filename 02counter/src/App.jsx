@@ -7,7 +7,10 @@ function App() {
   const updateCounter= ()=>{
     if(counter<20){
       // update through reference of counter using prev
-      setCounter(prev=> prev+1);
+      setCounter((prevCounter)=> prevCounter+1);
+      setCounter((prevCounter)=> prevCounter+1);
+      setCounter((prevCounter)=> prevCounter+1);
+      console.log(counter);
     }
   }
   const downgradeCounter= ()=>{
