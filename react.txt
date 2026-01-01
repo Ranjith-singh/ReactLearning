@@ -28,6 +28,8 @@ projects:
         create a counter value that gets increamented and decremented using buttons
         in Javascript we should update the value and place them individually in the dom variable references
         in React we use hooks like useState() and useEffect() to reflect the updatedVariable in the entire dom
+        instead of directly using the variable to update update using its prev state provided by react
+            the react fiber when same type of increment is done on the counter thinks it as rewrite of update mistake and takes only one
     React createRoot():
         React uses the createRoot method to create a virtual dom in memory from the browser dom
         when the dom content is modified it creates a new dom and compares it with the virtual dom using diffing.
@@ -37,6 +39,32 @@ projects:
         tailwind is a utility function that internally uses the css for ui/ux
         you can create a component for a tailwind and pass the props obj for attribute insertion in tailwind component
         the component directly provides this props obj
+    04bgChanger:
+        uses set of colors present in div to change a color
+    05passwordgenerator:
+        this application generates password based on the length of input allowed which is toggled
+            the truth values of the numbers and characters
+        we use the useState hook to keep the states of each of these parameter and update accordingly
+        we use the useEffect hook to monitor these parameters and trigger events based on change
+        useCallBack hook to store the cache in memory for improved performance
+        useRef hook to hold a reference of variable and discover all its functionalities
+    06CurrencyConverter:
+        create a custom hook which takes value from inputBox and based on the value calls the OnCurrencyChange
+            which internally calls api based on the value passed and return obj contains currencyType: value
+        create a inputBox component which takes various fields as through args and returns a inputBox jsx
+            you can add hooks for storing states of variable and can also add useEffect on what args it should depend
+            make sure to use html.for loops for keys to make it more efficient and get values in the form of array for easy functionality
+        use these input box component and custom hooks inside App.jsx
+    07ReactRouter:
+        use react-router-dom to render different components based on different url
+            use routerprovider and createBrowserRouter() to create route
+            takes params: path and element to render
+            you can also provide nested routes as well
+        you can use RRD's outlet to provide paths based on varying urls and rest as constant for improved performance
+        should use link and navlink from RRD instead of <a> cause the <a> re-renders the entire page which is not a concept of react
+        also use useParams to get url based params and passed arg isActive to check which page they are on
+        can use useLoaderData to load data on cursor hover which can be used instead of useEffect
+            for improved performance
     
 
     
