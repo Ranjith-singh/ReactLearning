@@ -65,6 +65,43 @@ projects:
         also use useParams to get url based params and passed arg isActive to check which page they are on
         can use useLoaderData to load data on cursor hover which can be used instead of useEffect
             for improved performance
+    08ThemeSwitcher:
+        when we want to you any params to be used inside a nested component but don't want nested passing
+            you can use contextApi which comes along with react
+        createContext() is used to create contexts, then you need to wrap your components inside its contextProvider
+            and specify the params obj which can be used
+        now you can use this context using the useContext() from react around the component wrapped by contextProvider
+    09TodoList:
+        In this project we will use about ContextApi and localstorage
+        you can create context api by using createContext() and useContext()
+            and passing params through contextProvider encapsulating components
+        useContext can be wrapped under a higher order function
+        react lets you directly access browser's localstorage using localstorage obj
+        localstorage takes values only in Strings
+    reduxToolKitTodo:
+        Here the contextApi works fine but to make it more encapsulating and singe score of truth
+            we use redux
+        redux is separate framework which can be used with react, Vue etc and to connect redux with react
+            we use react-redux
+        redux-toolkit: more refined and better version handles various edge cases
+        their are mainly 4 things important about redux
+            store: which acts as a single source of truth for data
+            reducers: methods which helps in modifying the data stored in store/Slice
+            useSelector: to select a particular element from store
+            useDispatch: to push new value into the store
+        you can create store using the configureStore() which needs reference to the reducer
+        reducer is created inside the createSlice() which has a name, initialState and a reducer takes 2 params
+            (state, action): state points to the initialState and action points to the request
+        it also provide nanoid() for unique id generation
+        export slice.reducer, action and slice itself for future use
+        useDispatch provides payload to addData to dispatch
+        useSelector takes both (state, action) params state referring to store and action to request
+        now to use these values and reducers we encapsulate our components with react.provider
+            but in here instead of directly passing the props we pass store which is single source truth
+
+    
+
+        
     
 
     
