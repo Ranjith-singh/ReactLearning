@@ -98,6 +98,7 @@ projects:
         useSelector takes both (state, action) params state referring to store and action to request
         now to use these values and reducers we encapsulate our components with react.provider
             but in here instead of directly passing the props we pass store which is single source truth
+    
 
     
 
