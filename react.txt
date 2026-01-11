@@ -98,6 +98,22 @@ projects:
         useSelector takes both (state, action) params state referring to store and action to request
         now to use these values and reducers we encapsulate our components with react.provider
             but in here instead of directly passing the props we pass store which is single source truth
+    MegaBlog:
+        users can create and share their blog with others and only owners can modify their blogs
+            blog consistOf: title, content, image, status and user_id
+        we use different frameworks like react-hook-form, redux-toolkit and html-react-parser
+        we use appwrite: a website that provides entire backend architecture with api's to perform CRED ops
+            we use the appwrite framework in the frontend to interact with appwrite account
+        appwrite:
+            we communicate with appwrite backend server using new Client() where we pass appwrite url and projectId
+                we create account using client
+                    through which we process Auth related services like
+                    SignUp, logIn, GetCurrentUser and logout
+                    they return promise which can be handled using async/await or .then() and communications happens through sessions
+                we create database using client through which we perform CRED ops on docs in collections
+                we create storage using client for file storage and return fileID
+
+
     
 
     
