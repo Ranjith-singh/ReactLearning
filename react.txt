@@ -112,7 +112,15 @@ projects:
                     they return promise which can be handled using async/await or .then() and communications happens through sessions
                 we create database using client through which we perform CRED ops on docs in collections
                 we create storage using client for file storage and return fileID
-
+                we use redux-toolkit to manage our state for weather the user is logged or not
+                    with the help of hooks
+                vary the header display based on the weather the user is logged in or not
+                to reference an element instead of refId we can use forwardRef which provides ref
+                    which needs to be passed to the referencing element
+                we use react-hook-form to handle form creation and submission
+                    we handle event onSubmit() using handleSubmit() which acts as a higher order func
+                    the register param takes all the input fields values and watch continuously monitors the form
+                
 
     
 
