@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        const date= function(){
+            return dayjs().format('MMMM DD');
+        }
+        const currentTime= function(){
+            return dayjs().format("HH:mm:ss")
+        }
+        const container= document.querySelector(".js-container");
+        // ReactDOM.createRoot(container).render(function(){
+        //     console.log(dayjs().format('MMMM DD'));
+        // }());
+        const root= ReactDOM.createRoot(container);
+        const setInterval= setInterval(() => {
+            const div= (
+                <div>
+                    <p>Today Is {date()}</p>
+                    <p>Current time is {currentTime()}</p>
+                    <button onClick={()=> clearInterval(setInterval)}>Stop timer</button>
+                </div>
+            )
+            root.render(div);
+        }, 1000);
+        // ReactDOM.createRoot(container).render(div);
+    </script>
+</body>
+</html>
