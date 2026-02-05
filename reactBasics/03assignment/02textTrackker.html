@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        const Input= ()=>{
+            const [inputValue, setInputValue]= React.useState('');
+            const trackInput= (event)=>{
+                setInputValue(event.target.value)
+            }
+            const resetInput= ()=>{
+                setInputValue('')
+            }
+            const exampleInput= ()=>{
+                setInputValue('Alice')
+            }
+            return(
+                <>
+                    <input
+                        placeholder= "Type a name here"
+                        onChange= {trackInput}
+                        value= {inputValue}
+                    />
+                    <button
+                        onClick= {resetInput}
+                    >
+                        Reset
+                    </button>
+                    <button
+                        onClick= {exampleInput}
+                    >
+                        Example
+                    </button>
+                    <p>
+                        Hello {inputValue}
+                    </p>
+                </>
+            )
+        }
+
+        const App=()=>{
+            return(
+                <Input />
+            )
+        }
+
+        const container= document.querySelector(".js-container");
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+</html>

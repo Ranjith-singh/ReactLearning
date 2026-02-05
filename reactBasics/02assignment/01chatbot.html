@@ -3,6 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            font-family: Arial;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        .input-message{
+            padding: 15px 20px;
+            font-size: 15px;
+            margin: 10px;
+            margin-bottom: 50px;
+            border-width: 2px;
+            border-radius: 10px;
+            background-color:rgb(241, 232, 232);
+            flex: auto;
+        }
+        .send-button{
+            padding: 10px 20px;
+            font-size: 15px;
+            margin: 10px;
+            margin-bottom: 50px;
+            border-radius: 10px;
+            border: None;
+            color: white;
+            background-color: black;
+            cursor: pointer;
+        }
+        .user-input{
+            display: flex;
+        }
+        .user-chat{
+            display: flex;
+            justify-content: end;
+            align-items: center;
+        }
+        .robot-chat{
+            display: flex;
+            align-items: center;
+        }
+        .message{
+            background-color: rgb(238, 238, 238);
+            padding: 15px 20px;
+            margin: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+        }
+        .app{
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .profile{
+            width: 45px
+        }
+        .chat-message-container{
+            flex-grow: 1;
+            margin-top: 20px;
+            overflow: scroll;
+            scrollbar-width: none;
+            text-align: center;
+        }
+        .welcome-message{
+            color: rgb(169, 163, 163);
+        }
+        .loading-spinner{
+            width: 30px;
+            margin: -10px;
+        }
+
+    </style>
     <title>chat bot</title>
 </head>
 <body>
@@ -11,70 +86,120 @@
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-
+        const useAutoScroll= (dependencies)=>{
+            const chatMessages= React.useRef(null)
+            React.useEffect(()=>{
+                const curChats= chatMessages.current;
+                if(curChats){
+                    curChats.scrollTop= curChats.scrollHeight;
+                }
+            },dependencies)
+            return chatMessages
+        }
         const InputMessage= (props)=>{
             const {chats, setChats}= props
             const [inputValue, setInputValue]= React.useState('');
+            const [isLoading, setIsLoading]= React.useState(false)
             
             const storeInput= (message, event)=>{
                 // console.log(message);
                 setInputValue(event.target.value);
             }
-            const sendMessage= ()=>{
-                setChats([
+            const sendMessage= async()=>{
+                // const response= Chatbot.getResponse(inputValue);
+                if(inputValue.trim()===''){
+                    return
+                }
+                const newChats= [
                     ...chats,
                     {
                         message: inputValue,
                         sender: 'user',
                         id: crypto.randomUUID()
                     }
-                ])
-
+                ]
+                setChats(newChats)
                 setInputValue('')
-            }
+                const loadingImg= <img className="loading-spinner" src= "hsaart-gradient-5812_256.gif" />
 
+                setChats([
+                    ...newChats,
+                    {
+                        message: loadingImg,
+                        sender: "robot",
+                        id: crypto.randomUUID()
+                    }
+                ])
+                setIsLoading(true)
+
+                const response= await Chatbot.getResponseAsync(inputValue);
+
+                setChats([
+                    ...newChats,
+                    {
+                        message: response,
+                        sender: "robot",
+                        id: crypto.randomUUID()
+                    }
+                ])
+                setIsLoading(false)
+            }
+            const keyStroke= (event)=>{
+                if(event.key==='Enter'){
+                    sendMessage(event)
+                }
+                else if(event.key==='Escape'){
+                    setInputValue('')
+                }
+            }
             return (
-            <>
+            <div
+                className= "user-input"
+            >
                 <input
-                    id="message"
+                    className="input-message"
                     placeholder="type your query"
                     onChange= {(event)=>(storeInput("hello", event))}
+                    onKeyDown= {keyStroke}
                     value= {inputValue}
+                    disabled= {isLoading}
                     size="30"
                 />
                 <button
+                    className="send-button"
                     onClick={sendMessage}
                 >
                     Send
                 </button>
-            </>
+            </div>
             )
         }
-
         const ChatMessage= ({message, sender})=>(
-            <div>
-                <p>
-                    {sender === "robot" && (
-                        <img
-                            src="https://www.shutterstock.com/shutterstock/photos/2475457627/display_1500/stock-vector-robot-abstract-logo-modern-style-2475457627.jpg"
-                            width= "40"
-                        />
-                    )}
+            <div className={
+                (sender==='user')?'user-chat':'robot-chat'
+            }>
+                {sender === "robot" && (
+                    <img className="profile"
+                        src="https://www.shutterstock.com/shutterstock/photos/2475457627/display_1500/stock-vector-robot-abstract-logo-modern-style-2475457627.jpg"
+                    />
+                )}
+                <div className="message">
                     {message}
-                    {sender === "user" && (
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" 
-                            width="20"
-                        />
-                    )}
-                </p>
+                </div>
+                {sender === "user" && (
+                    <img className="profile"
+                        src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                    />
+                )}
             </div>
         )
-
         const ChatMessages= (props)=>{
             const {chats, setChats}= props;
+            const chatMessages= useAutoScroll([chats])
 
             const submit= ()=>{
                 // chats.push({
@@ -96,54 +221,66 @@
             }
 
             return (
-                <>
-                    <button onClick={submit} >Submit</button>
-                    {chats.map((chat)=>(
-                        <ChatMessage
-                            message={chat.message}
-                            sender={chat.sender}
-                            key= {chat.id}
-                        />
+                <div
+                    className="chat-message-container"
+                    ref= {chatMessages}
+                >
+                    <button
+                        onClick={submit}
+                        hidden= {true}
+                    >Submit</button>
+                    {(chats.length===0)
+                        ?<p
+                            className="welcome-message"
+                        >
+                            Welcome to the Chatbot project! Send a message using the textbox below
+                        </p>
+                        :chats.map((chat)=>(
+                            <ChatMessage
+                                message={chat.message}
+                                sender={chat.sender}
+                                key= {chat.id}
+                            />
                     ))}
-                </>
+                </div>
             );
 
         }
 
         const App= ()=>{
             const [chats, setChats]= React.useState([
-                {
-                    message: "Hi, how are you?",
-                    sender: "user",
-                    id: '1'
-                },
-                {
-                    message: "I am fine thanks for asking",
-                    sender: "robot",
-                    id: '2'
-                },
-                {
-                    message: "roll a dice.",
-                    sender: "user",
-                    id: '3'
-                },
-                {
-                    message: "Wow! you got 6",
-                    sender: "robot",
-                    id: '4'
-                }
+                // {
+                //     message: "Hi, how are you?",
+                //     sender: "user",
+                //     id: '1'
+                // },
+                // {
+                //     message: "I am fine thanks for asking",
+                //     sender: "robot",
+                //     id: '2'
+                // },
+                // {
+                //     message: "roll a dice.",
+                //     sender: "user",
+                //     id: '3'
+                // },
+                // {
+                //     message: "Wow! you got 6",
+                //     sender: "robot",
+                //     id: '4'
+                // }
             ])
             return(
-                <>
-                    <InputMessage
-                        chats= {chats}
-                        setChats= {setChats}
-                    />
+                <div className="app">
                     <ChatMessages
                         chats= {chats}
                         setChats= {setChats}
                     />
-                </>
+                    <InputMessage
+                        chats= {chats}
+                        setChats= {setChats}
+                    />
+                </div>
             )
         };
 

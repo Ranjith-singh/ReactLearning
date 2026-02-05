@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial;
+        }
+        .inputs{
+            margin: 5px;
+            padding: 10px 20px;
+            max-width: 160px;
+            border-width: 2px;
+            border-radius: 10px;
+        }
+        .buttons{
+            color: white;
+            background-color: rgb(0, 123, 255);
+            border: none;
+            margin: 5px;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        const Inputs= ()=>{
+            const [showPassword, setShowPassword]= React.useState(false)
+            const show= ()=>{
+                setShowPassword((prev)=>!prev)
+            }
+            return(
+                <div>
+                    <input
+                        className= "inputs"
+                        placeholder="Email"
+                    />
+                    <br />
+                    <input
+                        className= "inputs"
+                        placeholder="Password"
+                        type={showPassword?"text":"password"}
+                    />
+                    <button
+                        onClick={show}
+                    >
+                        Show
+                    </button>
+                </div>
+            )
+        }
+        const Buttons= ()=>(
+            <>
+                <button
+                    className= "buttons"
+                >
+                    Login
+                </button>
+                <button
+                    className= "buttons"
+                >
+                    SignUp
+                </button>
+            </>
+        )
+        const LoginForm= function(){
+            return (
+                <>
+                    <Inputs/>
+                    <Buttons/>
+                </>
+            )
+        }
+
+        const App= ()=>(
+            <>
+                <p>Hello! Welcome to my website</p>
+                <LoginForm />
+            </>
+        )
+
+        const container= document.querySelector(".js-container");
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+</html>
