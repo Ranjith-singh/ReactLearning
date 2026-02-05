@@ -1,0 +1,40 @@
+.input-message{
+    padding: 15px 20px;
+    font-size: 15px;
+    margin: 10px;
+    margin-bottom: 50px;
+    border-width: 2px;
+    border-radius: 10px;
+    background-color:rgb(241, 232, 232);
+    flex: auto;
+    display: flex;
+}
+.send-button{
+    padding: 10px 20px;
+    font-size: 15px;
+    margin: 10px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    border: None;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+.user-input{
+    display: flex;
+}
+.loading-spinner{
+    width: 30px;
+    margin: -10px;
+}
+.clear-button{
+    padding: 10px 20px;
+    font-size: 15px;
+    margin: 10px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    border: None;
+    color: black;
+    background-color: rgb(206, 200, 200);
+    cursor: pointer;
+}
