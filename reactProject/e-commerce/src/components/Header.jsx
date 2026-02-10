@@ -5,7 +5,8 @@ import cartIcon from "../assets/icons/cart-icon.png"
 import searchIcon from "../assets/icons/search-icon.png"
 import "./css/Header.css"
 
-export const Header = () => {
+export const Header = (props) => {
+    const {cartItems}= props;
     return (
         <>
             <div className="header">
@@ -34,7 +35,12 @@ export const Header = () => {
 
                     <NavLink className="cart-link header-link" to="/checkout">
                         <img className="cart-icon" src= {cartIcon} />
-                        <div className="cart-quantity">3</div>
+                        <div className="cart-quantity">
+                            {cartItems.reduce((totalCart, cartItem)=>{
+                                // console.log(cartItem.quantity);
+                                return totalCart+ cartItem.quantity
+                            },0)}
+                        </div>
                         <div className="cart-text">Cart</div>
                     </NavLink>
                 </div>
