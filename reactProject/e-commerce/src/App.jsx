@@ -32,8 +32,8 @@ function App() {
         <Route path="/" element={<HomePage cartItems={cartItems} />} />
         <Route path='checkout' element={<Checkout cartItems={cartItems} />} />
         <Route path='orders' element={<Orders cartItems={cartItems}/>} />
-        <Route path='tracking' element={<Tracking />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path='tracking/:orderId/:productId' element={<Tracking cartItems={cartItems} />} />
+        <Route path="*" element={<PageNotFound cartItems={cartItems} />} />
       </Routes>
     </>
   )

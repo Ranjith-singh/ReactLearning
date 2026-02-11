@@ -4,7 +4,7 @@ import mobileLogo from "../../assets/mobile-logo.png"
 import checkoutLockIcon from '../../assets/icons/checkout-lock-icon.png'
 import { Link } from 'react-router'
 
-export function CheckoutHeader(){
+export function CheckoutHeader({cartItems}){
     return(
         <>
             <div className="checkout-header">
@@ -18,7 +18,10 @@ export function CheckoutHeader(){
 
                     <div className="checkout-header-middle-section">
                         Checkout (<Link className="return-to-home-link"
-                            to="/">3 items</Link>)
+                            to="/">{
+                                cartItems.reduce((totalCart, cartItem)=>{
+                                return totalCart+ cartItem.quantity},0)
+                            } items</Link>)
                     </div>
 
                     <div className="checkout-header-right-section">
