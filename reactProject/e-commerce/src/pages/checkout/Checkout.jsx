@@ -16,9 +16,8 @@ export default function Checkout({ cartItems }) {
             response = await axios.get('/api/payment-summary')
             setPaymentSummary(response.data)
         }
-
         fetchCheckoutData();
-    })
+    }, [])
     // useEffect(() => {
     //     axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
     //         .then((response)=>{

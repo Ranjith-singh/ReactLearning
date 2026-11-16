@@ -13,6 +13,7 @@ export function DeliveryOptions(props) {
                 return (
                     <div key={deliveryOption.id} className="delivery-option">
                         <input type="radio"
+                            onChange={()=>{}}
                             checked={cartItem.deliveryOptionId === deliveryOption.id}
                             className="delivery-option-input"
                             name={`delivery-option-${cartItem.productId}`} />
