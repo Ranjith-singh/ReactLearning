@@ -5,19 +5,28 @@ import { useState, useEffect } from 'react'
 import { OrderSummary } from './OrderSummary'
 import { PaymentSummary } from './PaymentSummary'
 
-export default function Checkout({ cartItems }) {
+export default function Checkout({ cartItems, getCartItems }) {
     const [deliveryOptions, setDeliveryOptions] = useState([])
     const [paymentSummary, setPaymentSummary]= useState(null);
+    let response;
+    async function getPaymentSummary(){
+        response = await axios.get('/api/payment-summary');
+        setPaymentSummary(response.data);
+    }
+    const getDeliveryOptions= async()=> {
+        response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime');
+        setDeliveryOptions(response.data);
+    }
+    const fetchCheckoutData= async()=>{
+        getDeliveryOptions();
+        getPaymentSummary();
+    }
     useEffect(()=>{
-        const fetchCheckoutData= async()=>{
-            let response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
-            setDeliveryOptions(response.data)
-
-            response = await axios.get('/api/payment-summary')
-            setPaymentSummary(response.data)
-        }
         fetchCheckoutData();
     }, [])
+    useEffect(()=> {
+        getPaymentSummary()
+    }, [cartItems])
     // useEffect(() => {
     //     axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
     //         .then((response)=>{
@@ -44,11 +53,13 @@ export default function Checkout({ cartItems }) {
                     <OrderSummary
                         cartItems={cartItems}
                         deliveryOptions={deliveryOptions}
+                        getCartItems= {getCartItems}
                     />
 
                     {paymentSummary && (
                         <PaymentSummary
                             paymentSummary={paymentSummary}
+                            getCartItems={getCartItems}
                         />
                     )}
                 </div>
