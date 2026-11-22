@@ -10,6 +10,8 @@ import axios from 'axios'
 
 function App() {
   const [cartItems, setCartItems]= useState([]);
+  window.axios= axios;
+
   const getCartItems= useCallback(async()=>{
       const response= await axios.get("/api/cart-items?expand=product")
       setCartItems(response.data)
@@ -17,21 +19,21 @@ function App() {
   useEffect(()=>{
     getCartItems();
   }, [])
-  // useEffect(()=>{
-  //       axios.get("/api/cart-items?expand=product")
-  //       .then((response)=>{
-  //           setCartItems(response.data)
-  //       })
-  //       .catch((error)=>{
-  //           console.log("error getting cart items from backend", error.data);
-  //       })
-  //   }, [])
+
+  const addToCart= async(productId, quantity) => {
+      await axios.post(`/api/cart-items`, {
+          productId,
+          quantity
+      });
+      getCartItems();
+  }
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage cartItems={cartItems} getCartItems={getCartItems}/>} />
+        <Route path="/" element={<HomePage cartItems={cartItems} getCartItems={getCartItems} addToCart={addToCart}/>} />
         <Route path='checkout' element={<Checkout cartItems={cartItems} getCartItems={getCartItems}/>} />
-        <Route path='orders' element={<Orders cartItems={cartItems}/>} />
+        <Route path='orders' element={<Orders cartItems={cartItems} addToCart={addToCart}/>} />
         <Route path='tracking/:orderId/:productId' element={<Tracking cartItems={cartItems} />} />
         <Route path="*" element={<PageNotFound cartItems={cartItems} />} />
       </Routes>

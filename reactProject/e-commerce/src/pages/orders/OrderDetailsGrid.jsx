@@ -3,7 +3,7 @@ import buyAgain from "../../assets/icons/buy-again.png"
 import { Fragment } from "react"
 import { Link } from "react-router"
 
-export function OrderDetailsGrid({order}) {
+export function OrderDetailsGrid({order, addToCart}) {
     return (
         <div className="order-details-grid">
             {order.products.map((orderProduct) => {
@@ -23,7 +23,12 @@ export function OrderDetailsGrid({order}) {
                             <div className="product-quantity">
                                 Quantity: {orderProduct.quantity}
                             </div>
-                            <button className="buy-again-button button-primary">
+                            <button
+                                className="buy-again-button button-primary"
+                                onClick={()=>{
+                                    addToCart(orderProduct.productId, orderProduct.quantity)
+                                }}
+                            >
                                 <img className="buy-again-icon" src={buyAgain} />
                                 <span className="buy-again-message">Add to Cart</span>
                             </button>

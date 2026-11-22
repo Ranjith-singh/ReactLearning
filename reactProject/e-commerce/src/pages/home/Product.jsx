@@ -3,23 +3,14 @@ import { moneyFormat } from "../../utils/Money";
 import checkMark from '../../assets/icons/checkmark.png'
 import { useEffect, useState } from "react";
 import './css/Product.css'
-import { Fragment } from "react";
 
-export function Product({product, getCartItems}) {
+export function Product({product, getCartItems, addToCart}) {
     const [quantity, setQuantity]= useState(1);
     const [showAdded, setShowAdded]= useState(false);
     function quantityChange(event) {
         // console.log(event.target.value);
         const quantityValue = Number(event.target.value);
         setQuantity(quantityValue);
-    }
-    const addToCart= async() => {
-        await axios.post(`/api/cart-items`, {
-            productId: product.id,
-            quantity
-        });
-        setShowAdded(true);
-        getCartItems();
     }
     useEffect(()=>{
         const addedTimeOut= setTimeout(()=>{
@@ -63,24 +54,25 @@ export function Product({product, getCartItems}) {
                     <option value="9">9</option>
                     <option value="10">10</option>
                 </select>
-                {showAdded && (
-                    <Fragment>
-                        Added
-                    </Fragment>
-                )
-                }
             </div>
 
             <div className="product-spacer"></div>
 
-            <div className="added-to-cart">
+            <div
+                className="added-to-cart"
+                style={{opacity: showAdded? 1: 0}}
+            >
                 <img src={checkMark} />
                 Added
             </div>
 
             <button
                 className="add-to-cart-button button-primary"
-                onClick={addToCart}
+                onClick={()=> {
+                        addToCart(product.id, quantity);
+                        setShowAdded(true);
+                    }
+                }
             >
                 Add to Cart
             </button>
