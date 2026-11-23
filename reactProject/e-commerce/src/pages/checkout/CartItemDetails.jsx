@@ -14,7 +14,7 @@ export function CartItemDetails({ cartItem, getCartItems }) {
     const UpdateCartItems= async()=> {
         // console.log(quantityInput.current?.value);
         await axios.put(`/api/cart-items/${cartItem.productId}`, {
-            quantity: quantity
+            quantity: Number(quantity)
         })
         await getCartItems();
     }
@@ -32,13 +32,22 @@ export function CartItemDetails({ cartItem, getCartItems }) {
                 </div>
                 <div className="product-quantity">
                     <input
-                        type="text"
+                        type="number"
                         className="quantity-input"
                         value={quantity}
                         onChange={(event)=>{
-                            console.log(event.target);
-                            // setQuantity(event.target.quantity);
-                            console.log(quantity);
+                            // console.log(event.target);
+                            setQuantity(event.target.value);
+                            // console.log(quantity);
+                        }}
+                        onKeyDown={(event)=>{
+                            if(event.key == 'Enter'){
+                                setQuantity(event.target.value);
+                                UpdateCartItems();
+                            }
+                            else if(event.key == 'Escape'){
+                                setQuantity(cartItem.quantity);
+                            }
                         }}
                     />
                     <span>
